@@ -27,15 +27,9 @@ void printUpdateChoices()
     cout << "********************\n";
 
     cout << "1. Contact Number\n"
-         << "2. House\n"
-         << "3. Road\n"
-         << "4. Area\n"
-         << "5. City\n"
-         << "6. Country\n"
-         << "7. Zip Code\n"
-         << "8. Birth Year\n"
-         << "9. Birth Month\n"
-         << "10. Birth Day\n"
+         << "2. Location\n"
+         << "3. Birth Day\n"
+         << "4. Exit\n"
          << "Choose Your Action ->>";
 }
 

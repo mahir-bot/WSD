@@ -75,20 +75,9 @@ void updateInfoUnsaved(infoAccountUser &user)
             {
                 break;
             }
-            vector<pair<int, string>> stores;
-            bool birth = isValidDate(user.year, user.month, user.day);
-            int age = calculateAge(user.year, user.month, user.day);
-            if (birth and age >= 18)
+            if (user.idType < 1 and user.idType > 2)
             {
-                checkId(stores, user.idType, user.id);
-            }
-            else if (birth and age < 18 and age >= 10)
-            {
-                checkIdKid(stores, user.idType, user.id);
-            }
-            for (auto it : stores)
-            {
-                cout << it.second << endl;
+                cout << "Please Provide a valid ID Type\n";
             }
         }
         else if (it == 5)
@@ -184,7 +173,7 @@ void updateInfoUnsaved(infoAccountUser &user)
             {
                 break;
             }
-            if (isValidZipCode(user.zip) == false)
+            if (user.zip.empty())
             {
                 cout << "Please Provide Valid Zip Code\n";
             }
@@ -198,9 +187,9 @@ void updateInfoUnsaved(infoAccountUser &user)
             {
                 break;
             }
-            if (user.year < 1900 or user.year > 2014)
+            if (user.year < 1900)
             {
-                cout << "Year Must Be greater Then 1900 and Less then 2014\n";
+                cout << "Year Must Be greater Then 1900\n";
             }
         }
         else if (it == 13)
@@ -226,10 +215,17 @@ void updateInfoUnsaved(infoAccountUser &user)
             {
                 break;
             }
-            int daysInMonth[] = {31, 28 + ((user.year % 4 == 0 && user.year % 100 != 0) || (user.year % 400 == 0)), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-            if (user.day < 1 || user.day > daysInMonth[user.month - 1])
+            if (user.month > 0 and user.month < 13)
             {
-                cout << "Make sure you provide valid Year and Month beforehand and provide valid day between 1-31 days based on month\n";
+                int daysInMonth[] = {31, 28 + ((user.year % 4 == 0 && user.year % 100 != 0) || (user.year % 400 == 0)), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+                if (user.day < 1 || user.day > daysInMonth[user.month - 1])
+                {
+                    cout << "Make sure you provide valid Year and Month beforehand and provide valid day between 1-31 days based on month\n";
+                }
+            }
+            else
+            {
+                cout << "First Provide Month and Year!";
             }
         }
         else
@@ -240,7 +236,6 @@ void updateInfoUnsaved(infoAccountUser &user)
     while (true)
     {
         vector<pair<int, string>> tag = userInfoCheck(user);
-        cout << tag.size() << endl;
 
         if (tag.empty())
         {
@@ -466,17 +461,288 @@ void updateInfoUnsaved(infoAccountUser &user)
     {
         return;
     }
-    
 }
 
-void updateInfo(long long int ac)
+void updateInfo()
 {
-    accountProfile profile = allAccounts[ac];
-
+    cout << "Enter User Account Number: ";
+    long long int id;
+    cin >> id;
+    accountProfile obj;
+    if (allAccounts.find(id) != allAccounts.end())
+    {
+        obj = allAccounts[id];
+    }
+    else
+    {
+        cout << "No Such Account Found!" << endl;
+        return;
+    }
+    infoAccountUser user;
     while (true)
     {
+
         printUpdateChoices();
-        int option;
-        cin >> option;
+        int it;
+        cin >> it;
+        cout << "If you want to quit Press -1\n";
+        if (it == 1)
+        {
+            cout << "Enter Contact Number(+880): ";
+            cin >> user.number;
+            cout << endl;
+            if (user.number == "-1")
+            {
+                return;
+            }
+            if (user.number.size() != 10)
+            {
+                cout << "Please Provide a Valid Phone number of 10 Digits\n";
+            }
+            else
+            {
+                obj.setNumber(user.number);
+            }
+        }
+        else if (it == 2)
+        {
+            cout << "House No: ";
+            cin >> user.house;
+            cout << endl;
+            if (user.house == "-1")
+            {
+                return;
+            }
+            if (user.house.empty())
+            {
+                cout << "Please Provide Valid House Number\n";
+                continue;
+            }
+
+            cout << "Road No: ";
+            cin >> user.road;
+            cout << endl;
+            if (user.road == "-1")
+            {
+                return;
+            }
+            if (user.road.empty())
+            {
+                cout << "Please Provide Valid Road Number\n";
+                continue;
+            }
+
+            cout << "Area: ";
+            cin >> user.area;
+            cout << endl;
+            if (user.area == "-1")
+            {
+                return;
+            }
+            if (user.area.empty())
+            {
+                cout << "Please Provide Valid Area\n";
+                continue;
+            }
+
+            cout << "City: ";
+            cin >> user.city;
+            cout << endl;
+            if (user.city == "-1")
+            {
+                return;
+            }
+            if (user.city.empty())
+            {
+                cout << "Please Provide Valid City\n";
+                continue;
+            }
+
+            cout << "Country: ";
+            cin >> user.country;
+            cout << endl;
+            if (user.country == "-1")
+            {
+                return;
+            }
+            if (user.country.empty())
+            {
+                cout << "Please Provide Valid Country\n";
+                continue;
+            }
+
+            cout << "Zip Code: ";
+            cin >> user.zip;
+            cout << endl;
+            if (user.zip == "-1")
+            {
+                return;
+            }
+            if (user.zip.empty() == false)
+            {
+                cout << "Please Provide Valid Zip Code\n";
+                continue;
+            }
+            obj.setLocation(user.area, user.country, user.house, user.road, user.city, user.zip);
+        }
+        else if (it == 3)
+        {
+            cout << "Year: ";
+            cin >> user.year;
+            cout << endl;
+            if (user.year == -1)
+            {
+                return;
+            }
+            if (user.year < 1900)
+            {
+                cout << "Year Must Be greater Then 1900\n";
+                continue;
+            }
+
+            cout << "Month: ";
+            cin >> user.month;
+            cout << endl;
+            if (user.month == -1)
+            {
+                return;
+            }
+            if (user.month < 1 || user.month > 12)
+            {
+                cout << "Month must be in between 1-12\n";
+                continue;
+            }
+
+            cout << "Day: ";
+            cin >> user.day;
+            cout << endl;
+            if (user.day == -1)
+            {
+                return;
+            }
+            int daysInMonth[] = {31, 28 + ((user.year % 4 == 0 && user.year % 100 != 0) || (user.year % 400 == 0)), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+            if (user.day < 1 || user.day > daysInMonth[user.month - 1])
+            {
+                cout << "Make sure you provide valid Year and Month beforehand and provide valid day between 1-31 days based on month\n";
+                continue;
+            }
+
+            obj.setDay(user.day);
+            obj.setMonth(user.month);
+            obj.setYear(user.year);
+        }
+        else if (it == 4)
+        {
+            break;
+        }
+    }
+
+    allAccounts[id] = obj;
+    return;
+}
+
+void displayUsers()
+{
+    if (allAccounts.empty())
+    {
+        cout << "No Account!\n";
+        return;
+    }
+    for (auto &entry : allAccounts)
+    {
+        cout << "Account ID: " << entry.first << endl;
+        cout << "Name: " << entry.second.getName() << endl;
+        cout << "Contact Number: " << entry.second.getNumber() << endl;
+        cout << "ID: " << entry.second.getID() << endl;
+        cout << "Creation Date: " << entry.second.getCreationDate() << endl;
+        cout << "Account Type: " << entry.second.getAccountType() << endl;
+        cout << "Birth Date: " << entry.second.getBirthTime() << endl;
+        cout << "Balance: " << entry.second.getBalance() << endl;
+    }
+}
+
+void deleteUser()
+{
+    cout << "Enter User Account Number: ";
+    long long int id;
+    cin >> id;
+    if (allAccounts.find(id) != allAccounts.end())
+    {
+        allAccounts.erase(id);
+        cout << "Erased Successfully!\n";
+    }
+    else
+    {
+        cout << "No Such Account Found!" << endl;
+    }
+}
+
+void addMoney()
+{
+    cout << "Enter User Account Number: ";
+    long long int id;
+    cin >> id;
+    if (allAccounts.find(id) != allAccounts.end())
+    {
+        double money;
+        cout << "Enter Amount: ";
+        cin >> money;
+        allAccounts[id].setDeposit(money);
+        cout << "Deposit Successfully!\n";
+    }
+    else
+    {
+        cout << "No Such Account Found!" << endl;
+    }
+}
+
+void withDraw()
+{
+    cout << "Enter User Account Number: ";
+    long long int id;
+    cin >> id;
+    if (allAccounts.find(id) != allAccounts.end())
+    {
+        double money;
+        cout << "Enter Amount: ";
+        cin >> money;
+        double save = allAccounts[id].getBalance();
+        if (save - money >= 500)
+        {
+            allAccounts[id].setWithdrawal(money);
+            cout << "WithDrawn Successfully!\n";
+        }
+        else
+        {
+            cout << "Not Sufficent Balance! Account Balance Must Have at least 500 Taka\n";
+        }
+    }
+    else
+    {
+        cout << "No Such Account Found!" << endl;
+    }
+}
+
+void searchAccount()
+{
+    cout << "Enter User Account Number: ";
+    long long int id;
+    cin >> id;
+    if (allAccounts.find(id) != allAccounts.end())
+    {
+        accountProfile entry = allAccounts[id];
+        cout << "Account ID: " << id << endl;
+        cout << "Name: " << entry.getName() << endl;
+        cout << "Contact Number: " << entry.getNumber() << endl;
+        cout << "ID: " << entry.getID() << endl;
+        cout << "Creation Date: " << entry.getCreationDate() << endl;
+        cout << "Account Type: " << entry.getAccountType() << endl;
+        cout << "Birth Date: " << entry.getBirthTime() << endl;
+        cout << "Balance: " << entry.getBalance() << endl;
+        entry.getHistory();
+    }
+    else
+    {
+        cout << "No Such Account Found!" << endl;
     }
 }

@@ -11,7 +11,7 @@ struct infoAccountUser
 {
     string name, number, id, house, road, area, city, country, zip;
     int type = -1, year = -1, month = -1, day = -1, idType = -1;
-    double balance = 500.00;
+    double balance = 0.0;
 };
 int calculateAge(int birthYear, int birthMonth, int birthDay)
 {
@@ -51,115 +51,13 @@ bool isValidDate(int year, int month, int day)
 
 void checkId(vector<pair<int, string>> &store, int idType, string id)
 {
-    if (idType != 1)
-    {
-        if (idType == -1)
-        {
-            store.push_back({14, "Can't Leave Empty! Provide Valid ID Type"});
-            if (id.length() > 0)
-                store.push_back({3, "ID type wasn't Provided, Give Your ID again"});
-            else
-                store.push_back({3, "Provide Id type and valid Id"});
-        }
-        else if (idType == 2)
-        {
-            store.push_back({14, "Need NID/Driver License, age is above 18"});
-            if (id.length() > 0)
-                store.push_back({3, "ID type wasn't Provided, Give Your ID again"});
-            else
-                store.push_back({3, "Provide Id type and valid Id"});
-        }
-        else
-        {
-            store.push_back({14, "Invalid Option"});
-            if (id.length() > 0)
-                store.push_back({3, "ID type wasn't Provided, Give Your ID again"});
-            else
-                store.push_back({3, "Provide Id type and valid Id"});
-        }
-    }
-    else
-    {
-        if (id.length() == 0)
-            store.push_back({3, "Can't Leave empty, Provide valid Id"});
-    }
-}
-
-void checkIdKid(vector<pair<int, string>> &store, int idType, string id)
-{
-    if (idType != 2)
-    {
-        if (idType == -1)
-        {
-            store.push_back({14, "Can't Leave Empty! Provide Valid ID Type"});
-            if (id.length() > 0)
-                store.push_back({3, "ID type wasn't Provided, Give Your ID again"});
-            else
-                store.push_back({3, "Provide Id type and valid Id"});
-        }
-        else if (idType == 1)
-        {
-            store.push_back({14, "Need Student ID, age is bellow 18"});
-            if (id.length() > 0)
-                store.push_back({3, "ID type wasn't Provided, Give Your ID again"});
-            else
-                store.push_back({3, "Provide Id type and valid Id"});
-        }
-        else
-        {
-            store.push_back({14, "Invalid Option"});
-            if (id.length() > 0)
-                store.push_back({3, "ID type wasn't Provided, Give Your ID again"});
-            else
-                store.push_back({3, "Provide Id type and valid Id"});
-        }
-    }
-    else
-    {
-        if (id.length() == 0)
-            store.push_back({3, "Can't Leave empty, Provide valid Id"});
-    }
-}
-
-bool isValidZipCode(string &zipCode)
-{
-    regex pattern("\\b\\d{4}\\b");
-    return regex_match(zipCode, pattern);
-}
-void checkAddress(vector<pair<int, string>> &store, infoAccountUser &user)
-{
-    if (isValidZipCode(user.zip) == false)
-    {
-        store.push_back({10, "Please Provide Valid Zip Code"});
-    }
-    if (user.house.empty())
-    {
-        store.push_back({5, "Please Provide Valid House Number"});
-    }
-    if (user.road.empty())
-    {
-        store.push_back({6, "Please Provide Valid Road Number"});
-    }
-    if (user.area.empty())
-    {
-        store.push_back({7, "Please Provide Valid Area"});
-    }
-    if (user.city.empty())
-    {
-        store.push_back({8, "Please Provide Valid City"});
-    }
-    if (user.country.empty())
-    {
-        store.push_back({9, "Please Provide Valid Country"});
-    }
+    if (id.length() == 0)
+        store.push_back({3, "Can't Leave empty, Provide valid Id"});
 }
 
 vector<pair<int, string>> userInfoCheck(infoAccountUser user)
 {
     vector<pair<int, string>> store;
-    bool birth = isValidDate(user.year, user.month, user.day);
-    checkAddress(store, user);
-    
     if (user.type < 0 or user.type > 4)
     {
         store.push_back({4, "Please Provide Type Of Account in the range of [1,4]"});
@@ -168,17 +66,8 @@ vector<pair<int, string>> userInfoCheck(infoAccountUser user)
     {
         store.push_back({2, "Please Provide a Valid Phone number of 10 Digits"});
     }
-    
-    int age = calculateAge(user.year, user.month, user.day);
-    if (birth and age >= 18)
-    {
-        checkId(store, user.idType, user.id);
-    }
-    else if (birth and age < 18 and age >= 10)
-    {
-        checkIdKid(store, user.idType, user.id);
-    }
-    else
+    bool birth = isValidDate(user.year, user.month, user.day);
+    if (birth == false)
     {
         store.push_back({11, "Provide Valid Year"});
         store.push_back({12, "Provide Valid Month"});
@@ -218,12 +107,10 @@ pair<infoAccountUser, int> printNewAccount_Details()
     cout << "Account Type Id no: ";
     cin >> user.type;
 
-
     cout << "\nEnter Account ID Type\n";
     cout << "1.Enter NID/Driver Licence \t 2.Student ID(Age Under 18)";
     cout << "\n ID type: ";
     cin >> user.idType;
-
 
     cout << "\nID: ";
     cin >> user.id;
@@ -257,12 +144,20 @@ pair<infoAccountUser, int> printNewAccount_Details()
     cout << "\nDay: ";
     cin >> user.day;
 
+    cout << "\nAmount: ";
+    cin >> user.balance;
+
+    if (user.balance < 500)
+    {
+        cout << "Can't open Account of Less then 500 Taka\n";
+        return {user, -1};
+    }
+
     bool out = false;
     int needToChange = 0;
     while (true)
     {
         vector<pair<int, string>> tag = userInfoCheck(user);
-        cout << tag.size() << endl;
 
         if (tag.empty())
         {
@@ -292,11 +187,9 @@ pair<infoAccountUser, int> printNewAccount_Details()
             break;
         }
 
-
-
         for (auto &it : tag)
         {
-            cout << "If you want to quit Press -1\n";
+            cout << "If you want to quit Creating Account Press -1\n";
             if (it.first == 1)
             {
                 cout << it.second << endl;
@@ -446,7 +339,7 @@ pair<infoAccountUser, int> printNewAccount_Details()
             {
                 cout << it.second << endl;
                 cout << "Month: ";
-                cout << user.month;
+                cin >> user.month;
                 cout << endl;
                 if (user.month == -1)
                 {
@@ -459,7 +352,7 @@ pair<infoAccountUser, int> printNewAccount_Details()
             {
                 cout << it.second << endl;
                 cout << "Day: ";
-                cout << user.day;
+                cin >> user.day;
                 cout << endl;
                 if (user.day == -1)
                 {

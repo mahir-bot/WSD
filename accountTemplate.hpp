@@ -51,13 +51,21 @@ public:
 
     string getName() { return name; }
     string getNumber() { return number; }
-    string GetID() { return id; }
+    string getID() { return id; }
     string getCreationDate() { return creationDate; }
     string getAccountType() { return accountType; }
     string getBirthTime() { return (to_string(year) + "/" + to_string(month) + "/" + to_string(day)); }
     long long int getAccountId() { return accountId; }
     double getBalance() { return balance; }
-    stack<Transaction> getHistory() { return history; }
+    void getHistory()
+    {
+        stack<Transaction> temp = history;
+        while (temp.empty() == false)
+        {
+            cout << temp.top().timestamp << " " << temp.top().type << " " << temp.top().amount << endl;
+            temp.pop();
+        }
+    }
 };
 
 void accountProfile::setName(const string &Identity) { name = Identity; }

@@ -37,5 +37,6 @@ void saveInfo(infoAccountUser &obj)
     profile.setMonth(obj.month);
     profile.setYear(obj.year);
     profile.setLocation(obj.area, obj.country, obj.house, obj.road, obj.city, obj.zip);
-    // allAccounts[profile.getAccountId()] = profile;
+    allAccounts[profile.getAccountId()] = profile;
 }
+

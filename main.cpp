@@ -40,46 +40,37 @@ signed main()
                         updateInfoUnsaved(obj.first);
 
                     saveInfo(obj.first);
-                    accountProfile temp;
-                    temp.setName(obj.first.name);
-                    temp.setID(obj.first.id);
-                    if (obj.first.type == 1)
-                        temp.setAccountType("Current Account");
-                    else if (obj.first.type == 2)
-                        temp.setAccountType("Saving Account");
-                    else if (obj.first.type == 3)
-                        temp.setAccountType("Salary Account");
-                    else
-                        temp.setAccountType("Student Account");
-
-                    long long int accountID = temp.getAccountId();
                 }
             }
             else if (choice == 2)
             {
                 // Display all accounts
+                displayUsers();
             }
             else if (choice == 3)
             {
                 // Update an account
+                updateInfo();
             }
             else if (choice == 4)
             {
                 // Delete an account
+                deleteUser();
             }
             else if (choice == 5)
             {
                 // Deposit an amount into your account
+                addMoney();
             }
             else if (choice == 6)
             {
                 // Withdraw an amount from your account
-
+                withDraw();
             }
             else if (choice == 7)
             {
                 // Search for account
-                
+                searchAccount();
             }
             else
             {
