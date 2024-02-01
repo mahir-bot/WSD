@@ -1,75 +1,10 @@
 #include <iostream>
 #include <string>
 #include <unordered_map>
-#include "validityFunction.hpp"
+#include <vector>
+#include <utility>
+
 using namespace std;
-
-unordered_map<int, string> userTag;
-
-struct infoAccountUser
-{
-    string name, number, id, house, road, area, city, country;
-    int type, zip, year, month, day;
-    double balance = 500.00;
-};
-void printNewAccount_Details()
-{
-    userTag[1] = "name";
-    userTag[2] = "number";
-    userTag[3] = "id";
-    userTag[4] = "type";
-    userTag[5] = "house";
-    userTag[6] = "road";
-    userTag[7] = "area";
-    userTag[8] = "city";
-    userTag[9] = "country";
-    userTag[10] = "zip";
-    userTag[11] = "year";
-    userTag[12] = "month";
-    userTag[13] = "day";
-    infoAccountUser user;
-    cout << "Please Provide Necessary Information For Completion Of Your Account" << endl;
-    cout << "Enter Name: ";
-    cin >> user.name;
-    cout << "\nEnter Contact Number(+880): ";
-    cin >> user.number;
-
-    cout << "Enter NID/Driver Licence/Student ID(Age Under 18): ";
-    cin >> user.id;
-
-    cout << "\nEnter Account Type\n";
-    cout << "1.Current Account \t 2.Saving Account \t 3.Salary Account \t 4.Student Account\n";
-    cout << "Account Type Id no: ";
-    cin >> user.type;
-
-    cout << "\nProvide Current Address";
-    cout << "\nHouse No: ";
-    cin >> user.house;
-    cout << "\nRoad No: ";
-    cin >> user.road;
-    cout << "\nArea: ";
-    cin >> user.area;
-    cout << "\nCity: ";
-    cin >> user.city;
-    cout << "Country: ";
-    cin >> user.country;
-    cout << "\nZip Code: ";
-    cin >> user.zip;
-
-    cout << "Date Of Birth";
-    cout << "\nYear: ";
-    cin >> user.year;
-    cout << "\nMonth: ";
-    cout << user.month;
-    cout << "\nDay: ";
-    cout << user.day;
-
-    while(true)
-    {
-        vector<int> tag = userInfoCheck(user);
-        
-    }
-}
 
 void printChoices()
 {
@@ -82,5 +17,48 @@ void printChoices()
          << "6. Withdraw an amount from your account\n"
          << "7. Search for account\n"
          << "8. Exit\n"
+         << "Choose Your Action ->>";
+}
+
+void printUpdateChoices()
+{
+    cout << "********************\n";
+    cout << "   Change Options\n";
+    cout << "********************\n";
+
+    cout << "1. Contact Number\n"
+         << "2. House\n"
+         << "3. Road\n"
+         << "4. Area\n"
+         << "5. City\n"
+         << "6. Country\n"
+         << "7. Zip Code\n"
+         << "8. Birth Year\n"
+         << "9. Birth Month\n"
+         << "10. Birth Day\n"
+         << "Choose Your Action ->>";
+}
+
+void printInfoUnsaved()
+{
+    cout << "********************\n";
+    cout << "   Change Options\n";
+    cout << "********************\n";
+
+    cout << "1. Name\n"
+         << "2. Contact Number\n"
+         << "3. Account Type\n"
+         << "4. Account ID Type\n"
+         << "5. User ID\n"
+         << "6. House\n"
+         << "7. Road\n"
+         << "8. Area\n"
+         << "9. City\n"
+         << "10. Country\n"
+         << "11. Zip Code\n"
+         << "12. Birth Year\n"
+         << "13. Birth Month\n"
+         << "14. Birth Day\n"
+         << "15. Quit\n"
          << "Choose Your Action ->>";
 }
