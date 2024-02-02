@@ -3,12 +3,14 @@
 #include <unordered_map>
 #include <vector>
 #include <utility>
-
+#include <cstdlib>
 using namespace std;
 
 void printChoices()
 {
-
+    cout << "********************\n";
+    cout << "      OPTIONS\n";
+    cout << "********************\n";
     cout << "1. Create a new account\n"
          << "2. Display all accounts\n"
          << "3. Update an account\n"

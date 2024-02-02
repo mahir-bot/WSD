@@ -23,8 +23,17 @@ signed main()
     {
         printChoices();
         int option;
-        cin >> option;
-       
+        string s;
+        cin >> s;
+        if (isValidInteger(s) == false)
+        {
+            cout << "Invalid Input\n";
+            continue;
+        }
+        option = stoi(s);
+        cout << endl;
+        // system("cls");
+
         if (option >= 1 and option <= 8)
         {
             if (option == 1)
@@ -34,6 +43,8 @@ signed main()
 
                 if (obj.second == -1)
                 {
+                    system("cls");
+                    cout << "\nAccount Creation Terminated!\n";
                     continue;
                 }
                 else
@@ -47,31 +58,37 @@ signed main()
             else if (option == 2)
             {
                 // Display all accounts
+                system("cls");
                 displayUsers();
             }
             else if (option == 3)
             {
                 // Update an account
+                system("cls");
                 updateInfo();
             }
             else if (option == 4)
             {
                 // Delete an account
+                system("cls");
                 deleteUser();
             }
             else if (option == 5)
             {
                 // Deposit an amount into your account
+                system("cls");
                 addMoney();
             }
             else if (option == 6)
             {
                 // Withdraw an amount from your account
+                system("cls");
                 withDraw();
             }
             else if (option == 7)
             {
                 // Search for account
+                system("cls");
                 searchAccount();
             }
             else
@@ -81,6 +98,7 @@ signed main()
         }
         else
         {
+            system("cls");
             cout << "Invalid Action Choice, Try Again!\n";
         }
     }

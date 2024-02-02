@@ -20,7 +20,7 @@ private:
     {
         string type;
         double amount;
-        time_t timestamp;
+        string timestamp;
     };
     string name;
     string number;
@@ -57,9 +57,22 @@ public:
     string getBirthTime() { return (to_string(year) + "/" + to_string(month) + "/" + to_string(day)); }
     long long int getAccountId() { return accountId; }
     double getBalance() { return balance; }
+    string getLocation()
+    {
+        stringstream ss;
+        ss << "Location\n";
+        ss << "City: " << location.city << "\n";
+        ss << "Country: " << location.country << "\n";
+        ss << "House: " << location.house << "\n";
+        ss << "Road: " << location.road << "\n";
+        ss << "Area: " << location.area << "\n";
+        ss << "Zip Code: " << location.zipCode << "\n";
+        return ss.str();
+    }
     void getHistory()
     {
         stack<Transaction> temp = history;
+        cout << "Transaction History" << endl;
         while (temp.empty() == false)
         {
             cout << temp.top().timestamp << " " << temp.top().type << " " << temp.top().amount << endl;
@@ -110,7 +123,10 @@ void accountProfile::setDeposit(double &Add)
     Transaction flow;
     flow.amount = Add;
     flow.type = "Deposit";
-    flow.timestamp = time(nullptr);
+    time_t createTime = time(nullptr);
+    ostringstream oss;
+    oss << put_time(localtime(&createTime), "%Y-%m-%d %H:%M:%S");
+    flow.timestamp = oss.str();
     history.push(flow);
 }
 void accountProfile::setWithdrawal(double &Subtract)
@@ -119,6 +135,9 @@ void accountProfile::setWithdrawal(double &Subtract)
     Transaction flow;
     flow.amount = Subtract;
     flow.type = "Withdrawal";
-    flow.timestamp = time(nullptr);
+    time_t createTime = time(nullptr);
+    ostringstream oss;
+    oss << put_time(localtime(&createTime), "%Y-%m-%d %H:%M:%S");
+    flow.timestamp = oss.str();
     history.push(flow);
 }

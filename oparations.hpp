@@ -17,8 +17,15 @@ void updateInfoUnsaved(infoAccountUser &user)
     while (true)
     {
         printInfoUnsaved();
+        string s;
+        cin >> s;
+        if (isValidInteger(s) == false)
+        {
+            cout << "Invalid Input!\n";
+            continue;
+        }
         int it;
-        cin >> it;
+        it = stoi(s);
         cout << "If you want to quit Press -1\n";
         if (it == 1)
         {
@@ -237,7 +244,7 @@ void updateInfoUnsaved(infoAccountUser &user)
             {
                 break;
             }
-            if (isValidInteger(user.day))
+            if (isValidInteger(user.day) and isValidInteger(user.month))
             {
                 if (stoi(user.month) > 0 and stoi(user.month) < 13)
                 {
@@ -273,8 +280,15 @@ void updateInfoUnsaved(infoAccountUser &user)
             while (true)
             {
                 cout << "Would You Like To Change Any Information?\n1.Yes \t 2.No" << endl;
+                string s;
+                cin >> s;
+                if (isValidInteger(s) == false)
+                {
+                    cout << "Invalid Input!!\n";
+                    continue;
+                }
                 int x;
-                cin >> x;
+                x = stoi(s);
                 if (x == 1)
                 {
                     needToChange = 1;
@@ -495,8 +509,16 @@ void updateInfoUnsaved(infoAccountUser &user)
 void updateInfo()
 {
     cout << "Enter User Account Number: ";
+    string s;
+    cin >> s;
+    bool what = isValidInteger(s);
     long long int id;
-    cin >> id;
+    if (what == false)
+    {
+        cout << "Wrong Input\n";
+        return;
+    }
+    id = stoi(s);
     accountProfile obj;
     if (allAccounts.find(id) != allAccounts.end())
     {
@@ -512,8 +534,15 @@ void updateInfo()
     {
 
         printUpdateChoices();
+        string s;
+        cin >> s;
+        if (isValidInteger(s) == false)
+        {
+            cout << "Invalid Input!\n";
+            continue;
+        }
         int it;
-        cin >> it;
+        it = stoi(s);
         cout << "If you want to quit Press -1\n";
         if (it == 1)
         {
@@ -691,6 +720,7 @@ void updateInfo()
         }
         else if (it == 4)
         {
+            system("cls");
             break;
         }
     }
@@ -708,6 +738,7 @@ void displayUsers()
     }
     for (auto &entry : allAccounts)
     {
+        cout << endl;
         cout << "Account ID: " << entry.first << endl;
         cout << "Name: " << entry.second.getName() << endl;
         cout << "Contact Number: " << entry.second.getNumber() << endl;
@@ -715,15 +746,25 @@ void displayUsers()
         cout << "Creation Date: " << entry.second.getCreationDate() << endl;
         cout << "Account Type: " << entry.second.getAccountType() << endl;
         cout << "Birth Date: " << entry.second.getBirthTime() << endl;
+        cout << entry.second.getLocation();
         cout << "Balance: " << entry.second.getBalance() << endl;
+        cout << endl;
     }
 }
 
 void deleteUser()
 {
-    cout << "Enter User Account Number: ";
+    cout << "\nEnter User Account Number: ";
+    string s;
+    cin >> s;
     long long int id;
-    cin >> id;
+    if (isValidInteger(s) == false)
+    {
+        cout << "Wrong Input\n";
+        return;
+    }
+    id = stoi(s);
+
     if (allAccounts.find(id) != allAccounts.end())
     {
         allAccounts.erase(id);
@@ -737,9 +778,17 @@ void deleteUser()
 
 void addMoney()
 {
-    cout << "Enter User Account Number: ";
+    cout << "\nEnter User Account Number: ";
+    string s;
+    cin >> s;
+    bool what = isValidInteger(s);
     long long int id;
-    cin >> id;
+    if (what == false)
+    {
+        cout << "Wrong Input\n";
+        return;
+    }
+    id = stoi(s);
     if (allAccounts.find(id) != allAccounts.end())
     {
         double money;
@@ -756,9 +805,17 @@ void addMoney()
 
 void withDraw()
 {
-    cout << "Enter User Account Number: ";
+    cout << "\nEnter User Account Number: ";
+    string s;
+    cin >> s;
+    bool what = isValidInteger(s);
     long long int id;
-    cin >> id;
+    if (what == false)
+    {
+        cout << "Wrong Input\n";
+        return;
+    }
+    id = stoi(s);
     if (allAccounts.find(id) != allAccounts.end())
     {
         double money;
@@ -783,12 +840,21 @@ void withDraw()
 
 void searchAccount()
 {
-    cout << "Enter User Account Number: ";
+    cout << "\nEnter User Account Number: ";
+    string s;
+    cin >> s;
+    bool what = isValidInteger(s);
     long long int id;
-    cin >> id;
+    if (what == false)
+    {
+        cout << "Wrong Input\n";
+        return;
+    }
+    id = stoi(s);
     if (allAccounts.find(id) != allAccounts.end())
     {
         accountProfile entry = allAccounts[id];
+        cout << endl;
         cout << "Account ID: " << id << endl;
         cout << "Name: " << entry.getName() << endl;
         cout << "Contact Number: " << entry.getNumber() << endl;
@@ -796,8 +862,11 @@ void searchAccount()
         cout << "Creation Date: " << entry.getCreationDate() << endl;
         cout << "Account Type: " << entry.getAccountType() << endl;
         cout << "Birth Date: " << entry.getBirthTime() << endl;
+        cout << entry.getLocation() << endl;
         cout << "Balance: " << entry.getBalance() << endl;
+
         entry.getHistory();
+        cout << endl;
     }
     else
     {

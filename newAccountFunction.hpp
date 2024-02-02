@@ -4,7 +4,7 @@
 #include <utility>
 #include <regex>
 #include <chrono>
-
+#include <cstdlib>
 using namespace std;
 
 struct infoAccountUser
@@ -18,12 +18,11 @@ bool isValidInteger(const std::string &input)
     try
     {
 
-        int result = std::stoi(input);
         if (input.find_first_not_of("0123456789") != std::string::npos)
         {
             return false;
         }
-        return true; // Input is a valid integer
+        return true;
     }
     catch (const std::invalid_argument &)
     {
@@ -105,6 +104,18 @@ vector<pair<int, string>> userInfoCheck(infoAccountUser user)
     else
     {
         store.push_back({4, "Please Provide Type Of Account in the range of [1,4]"});
+    }
+
+    if (isValidInteger(user.idType))
+    {
+        if (stoi(user.idType) < 0 or stoi(user.idType) > 2)
+        {
+            store.push_back({14, "Please Provide Type Of Account in the range of [1,2]"});
+        }
+    }
+    else
+    {
+        store.push_back({14, "Please Provide Type Of Account in the range of [1,2]"});
     }
 
     if (isValidInteger(user.number))
@@ -204,17 +215,16 @@ pair<infoAccountUser, int> printNewAccount_Details()
     string temp;
     cin >> temp;
     bool x = isValidDouble(temp);
-    cout << x << endl;
 
     if (x == false)
     {
-        cout << "Can't open Account of Less then 500 Taka\n";
+        cout << "\nCan't open Account of Less then 500 Taka\n";
         return {user, -1};
     }
     if (x)
         if (stod(temp) < 500)
         {
-            cout << "Can't open Account of Less then 500 Taka\n";
+            cout << "\nCan't open Account of Less then 500 Taka\n";
             // exit(0);
             return {user, -1};
         }
@@ -235,9 +245,16 @@ pair<infoAccountUser, int> printNewAccount_Details()
 
             while (true)
             {
-                cout << "Would You Like To Change Any Information?\n1.Yes \t 2.No" << endl;
+                cout << "\nWould You Like To Change Any Information?\n1.Yes \t 2.No" << endl;
+                string s;
+                cin >> s;
+                if (isValidInteger(s) == false)
+                {
+                    cout << "Invalid Input!\n";
+                    continue;
+                }
                 int x;
-                cin >> x;
+                x = stoi(s);
                 if (x == 1)
                 {
                     needToChange = 1;
@@ -245,7 +262,9 @@ pair<infoAccountUser, int> printNewAccount_Details()
                 }
                 else if (x == 2)
                 {
-                    cout << "Thank You!!!" << endl;
+                    system("cls");
+                    cout << "Thank You for Creating Account!!!\n"
+                         << endl;
                     break;
                 }
                 else
@@ -259,7 +278,7 @@ pair<infoAccountUser, int> printNewAccount_Details()
 
         for (auto &it : tag)
         {
-            cout << "If you want to quit Creating Account Press -1\n";
+            cout << "\nIf you want to quit Creating Account Press -1\n\n";
             if (it.first == 1)
             {
                 cout << it.second << endl;
@@ -270,6 +289,7 @@ pair<infoAccountUser, int> printNewAccount_Details()
                 {
                     user = infoAccountUser{};
                     out = true;
+
                     break;
                 }
             }
@@ -283,6 +303,7 @@ pair<infoAccountUser, int> printNewAccount_Details()
                 {
                     user = infoAccountUser{};
                     out = true;
+
                     break;
                 }
             }
@@ -296,6 +317,7 @@ pair<infoAccountUser, int> printNewAccount_Details()
                 {
                     user = infoAccountUser{};
                     out = true;
+
                     break;
                 }
             }
@@ -311,6 +333,7 @@ pair<infoAccountUser, int> printNewAccount_Details()
                 {
                     user = infoAccountUser{};
                     out = true;
+
                     break;
                 }
             }
@@ -324,6 +347,7 @@ pair<infoAccountUser, int> printNewAccount_Details()
                 {
                     user = infoAccountUser{};
                     out = true;
+
                     break;
                 }
             }
@@ -337,6 +361,7 @@ pair<infoAccountUser, int> printNewAccount_Details()
                 {
                     user = infoAccountUser{};
                     out = true;
+
                     break;
                 }
             }
@@ -350,6 +375,7 @@ pair<infoAccountUser, int> printNewAccount_Details()
                 {
                     user = infoAccountUser{};
                     out = true;
+
                     break;
                 }
             }
@@ -363,6 +389,7 @@ pair<infoAccountUser, int> printNewAccount_Details()
                 {
                     user = infoAccountUser{};
                     out = true;
+
                     break;
                 }
             }
@@ -376,6 +403,7 @@ pair<infoAccountUser, int> printNewAccount_Details()
                 {
                     user = infoAccountUser{};
                     out = true;
+
                     break;
                 }
             }
@@ -389,6 +417,7 @@ pair<infoAccountUser, int> printNewAccount_Details()
                 {
                     user = infoAccountUser{};
                     out = true;
+
                     break;
                 }
             }
@@ -402,6 +431,7 @@ pair<infoAccountUser, int> printNewAccount_Details()
                 {
                     user = infoAccountUser{};
                     out = true;
+
                     break;
                 }
             }
@@ -415,6 +445,7 @@ pair<infoAccountUser, int> printNewAccount_Details()
                 {
                     user = infoAccountUser{};
                     out = true;
+
                     break;
                 }
             }
@@ -428,6 +459,7 @@ pair<infoAccountUser, int> printNewAccount_Details()
                 {
                     user = infoAccountUser{};
                     out = true;
+
                     break;
                 }
             }
@@ -443,6 +475,7 @@ pair<infoAccountUser, int> printNewAccount_Details()
                 {
                     user = infoAccountUser{};
                     out = true;
+
                     break;
                 }
             }
