@@ -218,7 +218,7 @@ void updateInfoUnsaved(infoAccountUser &user)
         else if (it == 13)
         {
             cout << "Month: ";
-            cout << user.month;
+            cin >> user.month;
             cout << endl;
             if (user.month == "-1")
             {
@@ -238,7 +238,7 @@ void updateInfoUnsaved(infoAccountUser &user)
         else if (it == 14)
         {
             cout << "Day: ";
-            cout << user.day;
+            cin >> user.day;
             cout << endl;
             if (user.day == "-1")
             {
@@ -640,7 +640,7 @@ void updateInfo()
             {
                 return;
             }
-            if (user.zip.empty() == false)
+            if (user.zip.empty())
             {
                 cout << "Please Provide Valid Zip Code\n";
                 continue;
