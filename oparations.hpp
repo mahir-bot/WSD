@@ -43,7 +43,7 @@ void updateInfoUnsaved(infoAccountUser &user)
             {
                 break;
             }
-            if (user.number.size() != 10)
+            if (user.number.size() != 10 or isValidInteger(user.number) == false)
             {
                 cout << "Please Provide a Valid Phone number of 10 Digits\n";
             }
@@ -55,14 +55,19 @@ void updateInfoUnsaved(infoAccountUser &user)
             cout << "Account Type Id no: ";
             cin >> user.type;
             cout << endl;
-            if (user.type == -1)
+            if (user.type == "-1")
             {
                 break;
             }
-            if (user.type < 0 or user.type > 4)
+            if (isValidInteger(user.type))
             {
-                cout << "Please Provide Type Of Account in the range of [1,4]\n";
+                if (stoi(user.type) < 0 or stoi(user.type) > 4)
+                {
+                    cout << "Please Provide Type Of Account in the range of [1,4]\n";
+                }
             }
+            else if (isValidInteger(user.type) == false)
+                cout << "Please Provide Type Of Account in the range of [1,4]\n";
         }
         else if (it == 4)
         {
@@ -71,14 +76,19 @@ void updateInfoUnsaved(infoAccountUser &user)
             cout << "\n ID type: ";
             cin >> user.idType;
             cout << endl;
-            if (user.type == -1)
+            if (user.type == "-1")
             {
                 break;
             }
-            if (user.idType < 1 and user.idType > 2)
+            if (isValidInteger(user.idType))
             {
-                cout << "Please Provide a valid ID Type\n";
+                if (stoi(user.idType) < 1 and stoi(user.idType) > 2)
+                {
+                    cout << "Please Provide a valid ID Type\n";
+                }
             }
+            else if (isValidInteger(user.idType) == false)
+                cout << "Please Provide a valid ID Type\n";
         }
         else if (it == 5)
         {
@@ -89,6 +99,7 @@ void updateInfoUnsaved(infoAccountUser &user)
             {
                 break;
             }
+
             if (user.id.empty())
             {
                 cout << "Please Provide a valid ID\n";
@@ -183,47 +194,65 @@ void updateInfoUnsaved(infoAccountUser &user)
             cout << "Year: ";
             cin >> user.year;
             cout << endl;
-            if (user.year == -1)
+            if (user.year == "-1")
             {
                 break;
             }
-            if (user.year < 1900)
+            if (isValidInteger(user.year))
             {
-                cout << "Year Must Be greater Then 1900\n";
+                if (stoi(user.year) < 1900)
+                {
+                    cout << "Year Must Be greater Then 1900\n";
+                }
             }
+            else if (isValidInteger(user.year) == false)
+                cout << "Year Must Be greater Then 1900\n";
         }
         else if (it == 13)
         {
             cout << "Month: ";
             cout << user.month;
             cout << endl;
-            if (user.month == -1)
+            if (user.month == "-1")
             {
                 break;
             }
-            if (user.month < 1 || user.month > 12)
+
+            if (isValidInteger(user.month))
             {
-                cout << "Month must be in between 1-12\n";
+                if (stoi(user.month) < 1 || stoi(user.month) > 12)
+                {
+                    cout << "Month must be in between 1-12\n";
+                }
             }
+            else if (isValidInteger(user.month) == false)
+                cout << "Month must be in between 1-12\n";
         }
         else if (it == 14)
         {
             cout << "Day: ";
             cout << user.day;
             cout << endl;
-            if (user.day == -1)
+            if (user.day == "-1")
             {
                 break;
             }
-            if (user.month > 0 and user.month < 13)
+            if (isValidInteger(user.day))
             {
-                int daysInMonth[] = {31, 28 + ((user.year % 4 == 0 && user.year % 100 != 0) || (user.year % 400 == 0)), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-                if (user.day < 1 || user.day > daysInMonth[user.month - 1])
+                if (stoi(user.month) > 0 and stoi(user.month) < 13)
                 {
-                    cout << "Make sure you provide valid Year and Month beforehand and provide valid day between 1-31 days based on month\n";
+                    int daysInMonth[] = {31, 28 + ((stoi(user.year) % 4 == 0 && stoi(user.year) % 100 != 0) || (stoi(user.year) % 400 == 0)), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+                    if (stoi(user.day) < 1 || stoi(user.day) > daysInMonth[stoi(user.month) - 1])
+                    {
+                        cout << "Make sure you provide valid Year and Month beforehand and provide valid day between 1-31 days based on month\n";
+                    }
+                }
+                else
+                {
+                    cout << "First Provide Month and Year!";
                 }
             }
-            else
+            else if (isValidInteger(user.day) == false)
             {
                 cout << "First Provide Month and Year!";
             }
@@ -315,7 +344,7 @@ void updateInfoUnsaved(infoAccountUser &user)
                 cout << "Account Type Id no: ";
                 cin >> user.type;
                 cout << endl;
-                if (user.type == -1)
+                if (user.type == "-1")
                 {
                     user = infoAccountUser{};
                     out = true;
@@ -406,7 +435,7 @@ void updateInfoUnsaved(infoAccountUser &user)
                 cout << "Year: ";
                 cin >> user.year;
                 cout << endl;
-                if (user.year == -1)
+                if (user.year == "-1")
                 {
                     user = infoAccountUser{};
                     out = true;
@@ -419,7 +448,7 @@ void updateInfoUnsaved(infoAccountUser &user)
                 cout << "Month: ";
                 cout << user.month;
                 cout << endl;
-                if (user.month == -1)
+                if (user.month == "-1")
                 {
                     user = infoAccountUser{};
                     out = true;
@@ -432,7 +461,7 @@ void updateInfoUnsaved(infoAccountUser &user)
                 cout << "Day: ";
                 cout << user.day;
                 cout << endl;
-                if (user.day == -1)
+                if (user.day == "-1")
                 {
                     user = infoAccountUser{};
                     out = true;
@@ -447,7 +476,7 @@ void updateInfoUnsaved(infoAccountUser &user)
                 cout << "\n ID type: ";
                 cin >> user.idType;
                 cout << endl;
-                if (user.idType == -1)
+                if (user.idType == "-1")
                 {
                     user = infoAccountUser{};
                     out = true;
@@ -496,6 +525,10 @@ void updateInfo()
                 return;
             }
             if (user.number.size() != 10)
+            {
+                cout << "Please Provide a Valid Phone number of 10 Digits\n";
+            }
+            else if (isValidInteger(user.number) == false)
             {
                 cout << "Please Provide a Valid Phone number of 10 Digits\n";
             }
@@ -590,11 +623,19 @@ void updateInfo()
             cout << "Year: ";
             cin >> user.year;
             cout << endl;
-            if (user.year == -1)
+            if (user.year == "-1")
             {
                 return;
             }
-            if (user.year < 1900)
+            if (isValidInteger(user.year))
+            {
+                if (stoi(user.year) < 1900)
+                {
+                    cout << "Year Must Be greater Then 1900\n";
+                    continue;
+                }
+            }
+            else
             {
                 cout << "Year Must Be greater Then 1900\n";
                 continue;
@@ -603,11 +644,19 @@ void updateInfo()
             cout << "Month: ";
             cin >> user.month;
             cout << endl;
-            if (user.month == -1)
+            if (user.month == "-1")
             {
                 return;
             }
-            if (user.month < 1 || user.month > 12)
+            if (isValidInteger(user.month))
+            {
+                if (stoi(user.month) < 1 || stoi(user.month) > 12)
+                {
+                    cout << "Month must be in between 1-12\n";
+                    continue;
+                }
+            }
+            else
             {
                 cout << "Month must be in between 1-12\n";
                 continue;
@@ -616,20 +665,29 @@ void updateInfo()
             cout << "Day: ";
             cin >> user.day;
             cout << endl;
-            if (user.day == -1)
+            if (user.day == "-1")
             {
                 return;
             }
-            int daysInMonth[] = {31, 28 + ((user.year % 4 == 0 && user.year % 100 != 0) || (user.year % 400 == 0)), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-            if (user.day < 1 || user.day > daysInMonth[user.month - 1])
+
+            int daysInMonth[] = {31, 28 + ((stoi(user.year) % 4 == 0 && stoi(user.year) % 100 != 0) || (stoi(user.year) % 400 == 0)), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+            if (isValidInteger(user.day))
+            {
+                if (stoi(user.day) < 1 || stoi(user.day) > daysInMonth[stoi(user.month) - 1])
+                {
+                    cout << "Make sure you provide valid Year and Month beforehand and provide valid day between 1-31 days based on month\n";
+                    continue;
+                }
+            }
+            else
             {
                 cout << "Make sure you provide valid Year and Month beforehand and provide valid day between 1-31 days based on month\n";
                 continue;
             }
 
-            obj.setDay(user.day);
-            obj.setMonth(user.month);
-            obj.setYear(user.year);
+            obj.setDay(stoi(user.day));
+            obj.setMonth(stoi(user.month));
+            obj.setYear(stoi(user.year));
         }
         else if (it == 4)
         {

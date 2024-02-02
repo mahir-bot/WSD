@@ -15,15 +15,15 @@ void saveInfo(infoAccountUser &obj)
     profile.setNumber(obj.number);
     profile.setID(obj.id);
     profile.setCreationDate();
-    if (obj.type == 1)
+    if (obj.type == "1")
     {
         profile.setAccountType("Current Account");
     }
-    else if (obj.type == 2)
+    else if (obj.type == "2")
     {
         profile.setAccountType("Saving Account");
     }
-    else if (obj.type == 3)
+    else if (obj.type == "3")
     {
         profile.setAccountType("Salary Account");
     }
@@ -32,10 +32,10 @@ void saveInfo(infoAccountUser &obj)
         profile.setAccountType("Student Account");
     }
     profile.setAccountId();
-    profile.setDay(obj.day);
+    profile.setDay(stoi(obj.day));
     profile.setDeposit(obj.balance);
-    profile.setMonth(obj.month);
-    profile.setYear(obj.year);
+    profile.setMonth(stoi(obj.month));
+    profile.setYear(stoi(obj.year));
     profile.setLocation(obj.area, obj.country, obj.house, obj.road, obj.city, obj.zip);
     allAccounts[profile.getAccountId()] = profile;
 }

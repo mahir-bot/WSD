@@ -18,14 +18,16 @@ using namespace std;
 
 signed main()
 {
+
     while (true)
     {
         printChoices();
-        int choice;
-        cin >> choice;
-        if (choice >= 1 and choice <= 8)
+        int option;
+        cin >> option;
+       
+        if (option >= 1 and option <= 8)
         {
-            if (choice == 1)
+            if (option == 1)
             {
                 // Create a new account
                 pair<infoAccountUser, int> obj = printNewAccount_Details();
@@ -42,32 +44,32 @@ signed main()
                     saveInfo(obj.first);
                 }
             }
-            else if (choice == 2)
+            else if (option == 2)
             {
                 // Display all accounts
                 displayUsers();
             }
-            else if (choice == 3)
+            else if (option == 3)
             {
                 // Update an account
                 updateInfo();
             }
-            else if (choice == 4)
+            else if (option == 4)
             {
                 // Delete an account
                 deleteUser();
             }
-            else if (choice == 5)
+            else if (option == 5)
             {
                 // Deposit an amount into your account
                 addMoney();
             }
-            else if (choice == 6)
+            else if (option == 6)
             {
                 // Withdraw an amount from your account
                 withDraw();
             }
-            else if (choice == 7)
+            else if (option == 7)
             {
                 // Search for account
                 searchAccount();

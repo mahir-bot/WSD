@@ -10,9 +10,46 @@ using namespace std;
 struct infoAccountUser
 {
     string name, number, id, house, road, area, city, country, zip;
-    int type = -1, year = -1, month = -1, day = -1, idType = -1;
-    double balance = 0.0;
+    string type, year, month, day, idType;
+    double balance;
 };
+bool isValidInteger(const std::string &input)
+{
+    try
+    {
+
+        int result = std::stoi(input);
+        if (input.find_first_not_of("0123456789") != std::string::npos)
+        {
+            return false;
+        }
+        return true; // Input is a valid integer
+    }
+    catch (const std::invalid_argument &)
+    {
+        return false; // Input cannot be converted to an integer
+    }
+    catch (const std::out_of_range &)
+    {
+        return false; // Input is out of the range of representable values for int
+    }
+}
+bool isValidDouble(const string &str)
+{
+    try
+    {
+        stod(str);
+        return true;
+    }
+    catch (const invalid_argument &)
+    {
+        return false;
+    }
+    catch (const out_of_range &)
+    {
+        return false;
+    }
+}
 int calculateAge(int birthYear, int birthMonth, int birthDay)
 {
     auto now = chrono::system_clock::now();
@@ -58,15 +95,34 @@ void checkId(vector<pair<int, string>> &store, int idType, string id)
 vector<pair<int, string>> userInfoCheck(infoAccountUser user)
 {
     vector<pair<int, string>> store;
-    if (user.type < 0 or user.type > 4)
+    if (isValidInteger(user.type))
+    {
+        if (stoi(user.type) < 0 or stoi(user.type) > 4)
+        {
+            store.push_back({4, "Please Provide Type Of Account in the range of [1,4]"});
+        }
+    }
+    else
     {
         store.push_back({4, "Please Provide Type Of Account in the range of [1,4]"});
     }
-    if (user.number.size() != 10)
+
+    if (isValidInteger(user.number))
+    {
+        if (user.number.size() != 10)
+        {
+            store.push_back({2, "Please Provide a Valid Phone number of 10 Digits"});
+        }
+    }
+    else
     {
         store.push_back({2, "Please Provide a Valid Phone number of 10 Digits"});
     }
-    bool birth = isValidDate(user.year, user.month, user.day);
+
+    bool birth = false;
+    if (isValidInteger(user.year) and isValidInteger(user.month) and isValidInteger(user.day))
+        birth = isValidDate(stoi(user.year), stoi(user.month), stoi(user.day));
+
     if (birth == false)
     {
         store.push_back({11, "Provide Valid Year"});
@@ -145,13 +201,27 @@ pair<infoAccountUser, int> printNewAccount_Details()
     cin >> user.day;
 
     cout << "\nAmount: ";
-    cin >> user.balance;
+    string temp;
+    cin >> temp;
+    bool x = isValidDouble(temp);
+    cout << x << endl;
 
-    if (user.balance < 500)
+    if (x == false)
     {
         cout << "Can't open Account of Less then 500 Taka\n";
         return {user, -1};
     }
+    if (x)
+        if (stod(temp) < 500)
+        {
+            cout << "Can't open Account of Less then 500 Taka\n";
+            // exit(0);
+            return {user, -1};
+        }
+        else
+        {
+            user.balance = stod(temp);
+        }
 
     bool out = false;
     int needToChange = 0;
@@ -237,7 +307,7 @@ pair<infoAccountUser, int> printNewAccount_Details()
                 cout << "Account Type Id no: ";
                 cin >> user.type;
                 cout << endl;
-                if (user.type == -1)
+                if (user.type == "-1")
                 {
                     user = infoAccountUser{};
                     out = true;
@@ -328,7 +398,7 @@ pair<infoAccountUser, int> printNewAccount_Details()
                 cout << "Year: ";
                 cin >> user.year;
                 cout << endl;
-                if (user.year == -1)
+                if (user.year == "-1")
                 {
                     user = infoAccountUser{};
                     out = true;
@@ -341,7 +411,7 @@ pair<infoAccountUser, int> printNewAccount_Details()
                 cout << "Month: ";
                 cin >> user.month;
                 cout << endl;
-                if (user.month == -1)
+                if (user.month == "-1")
                 {
                     user = infoAccountUser{};
                     out = true;
@@ -354,7 +424,7 @@ pair<infoAccountUser, int> printNewAccount_Details()
                 cout << "Day: ";
                 cin >> user.day;
                 cout << endl;
-                if (user.day == -1)
+                if (user.day == "-1")
                 {
                     user = infoAccountUser{};
                     out = true;
@@ -369,7 +439,7 @@ pair<infoAccountUser, int> printNewAccount_Details()
                 cout << "\n ID type: ";
                 cin >> user.idType;
                 cout << endl;
-                if (user.idType == -1)
+                if (user.idType == "-1")
                 {
                     user = infoAccountUser{};
                     out = true;
